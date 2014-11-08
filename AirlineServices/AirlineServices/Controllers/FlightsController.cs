@@ -11,17 +11,17 @@ using AirlineServices.Models;
 
 namespace AirlineServices.Controllers
 {
-    public class FlightController : Controller
+    public class FlightsController : Controller
     {
         private AirlineContext db = new AirlineContext();
 
-        // GET: Flight
+        // GET: Flights
         public ActionResult Index()
         {
             return View(db.flights.ToList());
         }
 
-        // GET: Flight/Details/5
+        // GET: Flights/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,13 +36,13 @@ namespace AirlineServices.Controllers
             return View(flight);
         }
 
-        // GET: Flight/Create
+        // GET: Flights/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Flight/Create
+        // POST: Flights/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -59,7 +59,7 @@ namespace AirlineServices.Controllers
             return View(flight);
         }
 
-        // GET: Flight/Edit/5
+        // GET: Flights/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -74,7 +74,7 @@ namespace AirlineServices.Controllers
             return View(flight);
         }
 
-        // POST: Flight/Edit/5
+        // POST: Flights/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -90,7 +90,7 @@ namespace AirlineServices.Controllers
             return View(flight);
         }
 
-        // GET: Flight/Delete/5
+        // GET: Flights/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -105,7 +105,7 @@ namespace AirlineServices.Controllers
             return View(flight);
         }
 
-        // POST: Flight/Delete/5
+        // POST: Flights/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
