@@ -16,9 +16,30 @@ namespace AirlineServices.Controllers
         private AirlineContext db = new AirlineContext();
 
         // GET: Flights
-        public ActionResult Index()
+        public ActionResult Index(string source = null, string destination = null)
         {
-            return View(db.flights.ToList());
+            List<Flight> flights = db.flights.ToList();
+
+            // If source is not null, reduce list to just those that match the source airport code
+            if (source != null && source != "Source City")
+            {
+                flights = flights.Where(s => s.source.city == source).ToList();
+            }
+
+            // If destination is not null, reduce list to just those that match the destination airport code
+            if (destination != null && destination != "Destination City")
+            {
+                flights = flights.Where(s => s.destination.city == destination).ToList();
+            }
+
+            //var Locations = db.locations.Select(s => s.city).Distinct().ToList();
+            ViewBag.Sources = db.locations.Select(s => s.city).Distinct().ToList(); ;
+            ViewBag.Sources.Insert(0, "Source City");
+            ViewBag.Destinations = db.locations.Select(s => s.city).Distinct().ToList(); ;
+            ViewBag.Destinations.Insert(0, "Destination City");
+
+
+            return View(flights.OrderByDescending(s => s.departureDate));
         }
 
         // GET: Flights/Details/5

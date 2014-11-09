@@ -9,6 +9,17 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+<!-- Filtering Parameters -->
+@using (Html.BeginForm())
+{
+    <div class="panel">
+        @Html.Label("Source") @Html.DropDownList("source", new SelectList(ViewBag.Sources), htmlAttributes: new { @class = "form-control" })
+        @Html.Label("Destination") @Html.DropDownList("destination", new SelectList(ViewBag.Destinations), htmlAttributes: new { @class = "form-control" })<br />
+        <input class="btn btn-default" type="submit" value="Search" />
+    </div>
+}
+
+<!-- Data Table -->
 <table class="table">
     <tr>
         <th>
