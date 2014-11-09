@@ -12,8 +12,17 @@ namespace AirlineServices.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
+
+        [Required]
+        [Display(Name = "Airport Code")]
         public string airportCode { get; set; }
+
+        [Required]
+        [Display(Name = "City")]
         public string city { get; set; }
+
+        [Required]
+        [Display(Name = "Country")]
         public string country { get; set; }
     }
 }
