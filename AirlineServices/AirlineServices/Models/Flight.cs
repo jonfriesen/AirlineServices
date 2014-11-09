@@ -13,11 +13,11 @@ namespace AirlineServices.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
-        public Plane plane { get; set; }
+        public virtual Plane plane { get; set; }
 
-        public Location source { get; set; }
+        public virtual Location source { get; set; }
 
-        public Location destination { get; set; }
+        public virtual Location destination { get; set; }
 
         [Required]
         [Display(Name="Departure Date")]
