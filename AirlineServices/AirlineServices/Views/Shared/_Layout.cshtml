@@ -34,12 +34,19 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Airline Services</p>
+            <p>&copy; @DateTime.Now.Year - Made with <span class="glyphicon glyphicon-heart"></span> at UFV</p>
+
         </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/moment")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        $(function () {
+            $('.datetimepicker').datetimepicker();
+        })
+    </script>
 </body>
 </html>
