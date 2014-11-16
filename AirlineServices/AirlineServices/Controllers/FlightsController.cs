@@ -32,7 +32,7 @@ namespace AirlineServices.Controllers
                 flights = flights.Where(s => s.destination.city == destination).ToList();
             }
 
-            //var Locations = db.locations.Select(s => s.city).Distinct().ToList();
+            var Locations = db.locations.Select(s => s.city).Distinct().ToList();
             ViewBag.Sources = db.locations.Select(s => s.city).Distinct().ToList();
             ViewBag.Sources.Insert(0, "Source City");
             ViewBag.Destinations = db.locations.Select(s => s.city).Distinct().ToList();
@@ -60,9 +60,20 @@ namespace AirlineServices.Controllers
         // GET: Flights/Create
         public ActionResult Create()
         {
-            ViewBag.DestinationId = new SelectList(db.locations, "id", "city");
-            ViewBag.SourceId = new SelectList(db.locations, "id", "city");
+            //ViewBag.DestinationId = new SelectList(db.locations, "id", "city");
+            //ViewBag.SourceId = new SelectList(db.locations, "id", "city");
             ViewBag.PlaneId = new SelectList(db.planes, "tailNumber", "tailNumber");
+
+            ViewBag.DestinationId = db.locations.Select(s => new SelectListItem
+                {
+                    Value = s.id.ToString(),
+                    Text = s.airportCode + " - " + s.city
+                });
+            ViewBag.SourceId = db.locations.Select(s => new SelectListItem
+                {
+                    Value = s.id.ToString(),
+                    Text = s.airportCode + " - " + s.city
+                });
 
             return View();
         }
@@ -81,17 +92,17 @@ namespace AirlineServices.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            foreach (var modelStateValue in ViewData.ModelState.Values)
-            {
-                foreach (var error in modelStateValue.Errors)
+            
+            ViewBag.DestinationId = db.locations.Select(s => new SelectListItem
                 {
-                    // Do something useful with these properties
-                    var errorMessage = error.ErrorMessage;
-                    var exception = error.Exception;
-                }
-            }
-            ViewBag.DestinationId = new SelectList(db.locations, "id", "city", flight.DestinationId);
-            ViewBag.SourceId = new SelectList(db.locations, "id", "city", flight.SourceId);
+                    Value = s.id.ToString(),
+                    Text = s.airportCode + " - " + s.city
+                });
+            ViewBag.SourceId = db.locations.Select(s => new SelectListItem
+                {
+                    Value = s.id.ToString(),
+                    Text = s.airportCode + " - " + s.city
+                });
             ViewBag.PlaneId = new SelectList(db.planes, "tailNumber", "tailNumber", flight.PlaneId);
             return View(flight);
         }

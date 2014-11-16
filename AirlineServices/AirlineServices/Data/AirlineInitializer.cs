@@ -6,7 +6,7 @@ using System.Web;
 
 namespace AirlineServices.Data
 {
-    public class AirlineInitializer : System.Data.Entity.DropCreateDatabaseAlways<AirlineContext>
+    public class AirlineInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<AirlineContext>
     {
         protected override void Seed(AirlineContext context)
         {

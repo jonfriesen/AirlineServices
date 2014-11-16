@@ -40,8 +40,12 @@ namespace AirlineServices.Controllers
         // GET: Tickets/Create
         public ActionResult Create()
         {
-            ViewBag.FlightId = new SelectList(db.flights, "id", "id");
-            ViewBag.PassengerId = new SelectList(db.passengers, "id", "givenName");
+            ViewBag.FlightId = db.flights.Select(s => new SelectListItem
+            {
+                Value = s.id.ToString(),
+                Text = s.source.city + " - " + s.destination.city + " on " + s.departureDate.ToString()
+            });
+            ViewBag.PassengerId = new SelectList(db.passengers, "id", "FullName");
             return View();
         }
 
@@ -50,16 +54,29 @@ namespace AirlineServices.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,FlightId,PassengerId,status,type")] Ticket ticket)
+        public ActionResult Create([Bind(Include = "id,FlightId,PassengerId,type")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
+                ticket.status = TicketStatusType.BOOKED;
                 db.tickets.Add(ticket);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.FlightId = new SelectList(db.flights, "id", "id", ticket.FlightId);
+            foreach (var modelStateValue in ViewData.ModelState.Values)
+            {
+                foreach (var error in modelStateValue.Errors)
+                {
+                    // Do something useful with these properties
+                    var errorMessage = error.ErrorMessage;
+                    var exception = error.Exception;
+                }
+            }
+            ViewBag.FlightId = db.flights.Select(s => new SelectListItem
+            {
+                Value = s.id.ToString(),
+                Text = s.source.city + " - " + s.destination.city + " on " + s.departureDate.ToString()
+            });
             ViewBag.PassengerId = new SelectList(db.passengers, "id", "givenName", ticket.PassengerId);
             return View(ticket);
         }
@@ -76,8 +93,12 @@ namespace AirlineServices.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.FlightId = new SelectList(db.flights, "id", "id", ticket.FlightId);
-            ViewBag.PassengerId = new SelectList(db.passengers, "id", "givenName", ticket.PassengerId);
+            ViewBag.FlightId = db.flights.Select(s => new SelectListItem
+            {
+                Value = s.id.ToString(),
+                Text = s.source.city + " - " + s.destination.city + " on " + s.departureDate.ToString()
+            });
+            ViewBag.PassengerId = new SelectList(db.passengers, "id", "FullName", ticket.PassengerId);
             return View(ticket);
         }
 
@@ -86,7 +107,7 @@ namespace AirlineServices.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,FlightId,PassengerId,status,type")] Ticket ticket)
+        public ActionResult Edit([Bind(Include = "id,FlightId,PassengerId,type")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
@@ -94,8 +115,48 @@ namespace AirlineServices.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.FlightId = new SelectList(db.flights, "id", "id", ticket.FlightId);
-            ViewBag.PassengerId = new SelectList(db.passengers, "id", "givenName", ticket.PassengerId);
+            ViewBag.FlightId = db.flights.Select(s => new SelectListItem
+            {
+                Value = s.id.ToString(),
+                Text = s.source.city + " - " + s.destination.city + " on " + s.departureDate.ToString()
+            });
+            ViewBag.PassengerId = new SelectList(db.passengers, "id", "FullName", ticket.PassengerId);
+            return View(ticket);
+        }
+
+        // GET: Tickets/Pay/5
+        public ActionResult Pay(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Ticket ticket = db.tickets.Find(id);
+            if (ticket == null)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(ticket);
+        }
+
+        // POST: Tickets/Pay/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Pay([Bind(Include = "id")] Ticket ticket, string amountToPay)
+        {
+            if (ModelState.IsValid)
+            {
+                ticket.AmountPaid += Double.Parse(amountToPay);
+                if (ticket.AmountPaid >= ticket.flight.ticketPrice)
+                {
+                    ticket.status = TicketStatusType.CONFIRMED;
+                }
+                db.Entry(ticket).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
             return View(ticket);
         }
 
@@ -120,7 +181,8 @@ namespace AirlineServices.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Ticket ticket = db.tickets.Find(id);
-            db.tickets.Remove(ticket);
+            ticket.status = TicketStatusType.CANCELLED;
+            //db.tickets.Remove(ticket);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

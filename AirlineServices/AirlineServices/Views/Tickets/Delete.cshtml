@@ -1,12 +1,12 @@
 ﻿@model AirlineServices.Models.Ticket
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Refund";
 }
 
-<h2>Delete</h2>
+<h2>Cancel</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Are you sure you want to refund this?</h3>
 <div>
     <h4>Ticket</h4>
     <hr />
@@ -20,11 +20,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.passenger.givenName)
+            @Html.DisplayNameFor(model => model.passenger.FullName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.passenger.givenName)
+            @Html.DisplayFor(model => model.passenger.FullName)
         </dd>
 
         <dt>
@@ -43,14 +43,22 @@
             @Html.DisplayFor(model => model.type)
         </dd>
 
+        <dt>
+            Refund Amount
+        </dt>
+
+        <dd>
+            $@Html.DisplayFor(model => model.AmountPaid)
+        </dd>
+
     </dl>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Refund" class="btn btn-default" /> |
+            @Html.ActionLink("Back to Ticket list", "Index")
         </div>
     }
 </div>

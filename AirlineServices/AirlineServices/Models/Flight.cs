@@ -11,6 +11,7 @@ namespace AirlineServices.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Display(Name = "Flight Id")]
         public int id { get; set; }
 
         public int? PlaneId { get; set; }
@@ -36,7 +37,7 @@ namespace AirlineServices.Models
 
         [Required]
         [Display(Name = "Price")]
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
         public double ticketPrice { get; set; }
 
