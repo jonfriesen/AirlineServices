@@ -37,7 +37,7 @@ namespace AirlineServices.Models
         [Required]
         [Display(Name = "Price")]
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "${0:N2}", ApplyFormatInEditMode = true)]
         public double ticketPrice { get; set; }
 
         [ForeignKey("FlightId")]
