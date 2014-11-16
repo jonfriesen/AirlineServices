@@ -32,8 +32,13 @@ namespace AirlineServices.Controllers
                 flights = flights.Where(s => s.destination.city == destination).ToList();
             }
 
+<<<<<<< HEAD
             //var Locations = db.locations.Select(s => s.city).Distinct().ToList();
             ViewBag.Sources = db.locations.Select(s => s.city).Distinct().ToList(); ;
+=======
+            var Locations = db.locations.Select(s => s.city).Distinct().ToList();
+            ViewBag.Sources = db.locations.Select(s => s.city).Distinct().ToList();
+>>>>>>> b9e2e98... Adding UI/UX changes
             ViewBag.Sources.Insert(0, "Source City");
             ViewBag.Destinations = db.locations.Select(s => s.city).Distinct().ToList(); ;
             ViewBag.Destinations.Insert(0, "Destination City");
@@ -60,6 +65,24 @@ namespace AirlineServices.Controllers
         // GET: Flights/Create
         public ActionResult Create()
         {
+<<<<<<< HEAD
+=======
+            //ViewBag.DestinationId = new SelectList(db.locations, "id", "city");
+            //ViewBag.SourceId = new SelectList(db.locations, "id", "city");
+            ViewBag.PlaneId = new SelectList(db.planes, "tailNumber", "tailNumber");
+
+            ViewBag.DestinationId = db.locations.Select(s => new SelectListItem
+                {
+                    Value = s.id.ToString(),
+                    Text = s.airportCode + " - " + s.city
+                });
+            ViewBag.SourceId = db.locations.Select(s => new SelectListItem
+                {
+                    Value = s.id.ToString(),
+                    Text = s.airportCode + " - " + s.city
+                });
+
+>>>>>>> b9e2e98... Adding UI/UX changes
             return View();
         }
 
@@ -76,7 +99,22 @@ namespace AirlineServices.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+<<<<<<< HEAD
 
+=======
+            
+            ViewBag.DestinationId = db.locations.Select(s => new SelectListItem
+                {
+                    Value = s.id.ToString(),
+                    Text = s.airportCode + " - " + s.city
+                });
+            ViewBag.SourceId = db.locations.Select(s => new SelectListItem
+                {
+                    Value = s.id.ToString(),
+                    Text = s.airportCode + " - " + s.city
+                });
+            ViewBag.PlaneId = new SelectList(db.planes, "tailNumber", "tailNumber", flight.PlaneId);
+>>>>>>> b9e2e98... Adding UI/UX changes
             return View(flight);
         }
 

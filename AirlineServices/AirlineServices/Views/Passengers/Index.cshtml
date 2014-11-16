@@ -7,15 +7,12 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Register New Passenger", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.givenName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.familyName)
+            @Html.DisplayNameFor(model => model.FullName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.phoneNumber)
@@ -35,10 +32,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.givenName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.familyName)
+            @Html.DisplayFor(modelItem => item.FullName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.phoneNumber)

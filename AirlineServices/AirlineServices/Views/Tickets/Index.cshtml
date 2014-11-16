@@ -7,15 +7,18 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Book Ticket", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.flight.id)
+            Flight
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.passenger.givenName)
+            @Html.DisplayNameFor(model => model.flight.departureDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.passenger.FullName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.status)
@@ -26,13 +29,17 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.flight.id)
+            @Html.ActionLink((@Html.DisplayFor(modelItem => item.flight.source.city).ToString() + " - " + @Html.DisplayFor(modelItem => item.flight.destination.city).ToString()).ToString(), "Details", "Flights", new { item.flight.id }, new { @class = "" })
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.passenger.givenName)
+            @Html.ActionLink(@Html.DisplayFor(modelItem => item.flight.departureDate).ToString(), "Details", "Flights", new { item.flight.id }, new { @class = "" })
+        </td>
+        <td>
+            @Html.ActionLink(@Html.DisplayFor(modelItem => item.passenger.FullName).ToString(), "Details", "Passengers", new { item.passenger.id }, new { @class = "" })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.status)
@@ -40,10 +47,11 @@
         <td>
             @Html.DisplayFor(modelItem => item.type)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        <td>            
+            @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.id }) |
+            @Html.ActionLink("Refund", "Delete", new { id = item.id }) |
+            @Html.ActionLink("Pay", "Pay", new { id=item.id })
         </td>
     </tr>
 }

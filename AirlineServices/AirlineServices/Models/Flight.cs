@@ -11,6 +11,7 @@ namespace AirlineServices.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Display(Name = "Flight Id")]
         public int id { get; set; }
 
         public virtual Plane plane { get; set; }
@@ -27,8 +28,13 @@ namespace AirlineServices.Models
 
         [Required]
         [Display(Name = "Price")]
+<<<<<<< HEAD
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "${0:N2}", ApplyFormatInEditMode = true)]
+=======
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+>>>>>>> b9e2e98... Adding UI/UX changes
         public double ticketPrice { get; set; }
 
         [ForeignKey("FlightId")]

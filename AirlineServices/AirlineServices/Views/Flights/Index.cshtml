@@ -23,6 +23,12 @@
 <table class="table">
     <tr>
         <th>
+            Source
+        </th>
+        <th>
+            Destination            
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.departureDate)
         </th>
         <th>
@@ -37,10 +43,16 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.source.airportCode) - @Html.DisplayFor(modelItem => item.source.city)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.destination.airportCode) - @Html.DisplayFor(modelItem => item.destination.city)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.departureDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ticketPrice)
+            $@Html.DisplayFor(modelItem => item.ticketPrice)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.status)
