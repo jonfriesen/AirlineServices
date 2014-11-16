@@ -1,0 +1,21 @@
+{
+    "environmentSettings": {
+        "webSite": {
+            "name": "AirlineServices",
+            "location": "West US"
+        },
+        "databases": [
+            {
+                "connectionStringName": "DefaultConnection",
+                "databaseName": "AirlineServices_db",
+                "serverName": "",
+                "user": "AirlineServicesAdmin",
+                "password": "",
+                "edition": "",
+                "size": "",
+                "collation": "",
+                "location": "West US"
+            }
+        ]
+    }
+}
