@@ -1,4 +1,4 @@
-﻿@model AirlineServices.Models.Ticket
+﻿@model AirlineServices.ViewModels.PayViewModel
 
 @{
     ViewBag.Title = "Pay";
@@ -10,39 +10,61 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
+
+
         <h4>Ticket</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.id)
+        @Html.HiddenFor(model => model.ticket.id)
+        <dl class="dl-horizontal">
 
-        <div class="form-group">
-           @Html.DisplayNameFor(model => model.flight.id)
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.flight.id)
-            </div>
-        </div>
+            <dt>
+                @Html.DisplayNameFor(model => model.ticket.flight.id)
+            </dt>
 
-        <div class="form-group">
-            @Html.DisplayNameFor(model => model.passenger.FullName)
-            <div class="col-md-10">
-               @Html.DisplayFor(model => model.passenger.FullName)
-            </div>
-        </div>
+            <dd>
+                @Html.DisplayFor(model => model.ticket.flight.id)
+            </dd>
 
-        <div class="form-group">
-            @Html.DisplayNameFor(model => model.AmountDue)
-            <div class="col-md-10">
-                $@Html.DisplayFor(model => model.AmountDue)
-            </div>
-        </div>
+            <dt>
+                @Html.Label("Route")
+            </dt>
 
+            <dd>
+                @Html.DisplayFor(model => model.ticket.flight.source.city) (@Html.DisplayFor(model => model.ticket.flight.source.airportCode)) to @Html.DisplayFor(model => model.ticket.flight.destination.city) (@Html.DisplayFor(model => model.ticket.flight.destination.airportCode))
+            </dd>
+
+            <dt>
+                Passenger
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ticket.passenger.FullName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ticket.TicketClassPrice)
+            </dt>
+
+            <dd>
+                $@Html.DisplayFor(model => model.ticket.TicketClassPrice)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ticket.AmountDue)
+            </dt>
+
+            <dd>
+                $@Html.DisplayFor(model => model.ticket.AmountDue)
+            </dd>
+
+        </dl>
+    <div class="form-horizontal">
         <div class="form-group">
-            Amount to pay
+            @Html.LabelFor(model => model.AmountToPay, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AmountPaid, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AmountPaid, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.AmountToPay, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AmountToPay, "", new { @class = "text-danger" })
             </div>
         </div>
 

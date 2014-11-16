@@ -6,7 +6,7 @@ using System.Web;
 
 namespace AirlineServices.Data
 {
-    public class AirlineInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<AirlineContext>
+    public class AirlineInitializer : System.Data.Entity.DropCreateDatabaseAlways<AirlineContext>
     {
         protected override void Seed(AirlineContext context)
         {
@@ -38,7 +38,7 @@ namespace AirlineServices.Data
             var flights = new List<Flight>
             {
                 new Flight{plane=context.planes.First<Plane>(),
-                    departureDate=DateTime.Today,
+                    departureDate=DateTime.Today.AddDays(-20),
                     source=context.locations.Where(s => s.airportCode == "YVR").FirstOrDefault<Location>(),
                     destination=context.locations.Where(s => s.airportCode == "LAS").FirstOrDefault<Location>(),
                     ticketPrice=321.32,
@@ -53,13 +53,13 @@ namespace AirlineServices.Data
             // Passengers
             var passengers = new List<Passenger>
             {
-                new Passenger{tickets=new List<Ticket>{new Ticket{type=TicketType.FIRSTCLASS, status=TicketStatusType.BOOKED, flight=context.flights.First<Flight>()}},
+                new Passenger{tickets=new List<Ticket>{new Ticket{type=TicketType.FIRSTCLASS, status=TicketStatusType.BOOKED, AmountPaid = 300.00, flight=context.flights.First<Flight>()}},
                     givenName="Jon", familyName="Smith", phoneNumber="6045551234", address="123 Fake St. Fakeville", birthdate = new DateTime(1990, 06, 29), country="Canada"},
-                new Passenger{tickets=new List<Ticket>{new Ticket{type=TicketType.FIRSTCLASS, status=TicketStatusType.BOOKED, flight=context.flights.First<Flight>()}},
+                new Passenger{tickets=new List<Ticket>{new Ticket{type=TicketType.FIRSTCLASS, status=TicketStatusType.BOOKED, AmountPaid = 300.00,  flight=context.flights.First<Flight>()}},
                     givenName="Charles", familyName="Youds", phoneNumber="6045551234", address="123 Fake St. Fakeville", birthdate = new DateTime(1990, 06, 29), country="Canada"},
-                new Passenger{tickets=new List<Ticket>{new Ticket{type=TicketType.FIRSTCLASS, status=TicketStatusType.BOOKED, flight=context.flights.First<Flight>()}},
+                new Passenger{tickets=new List<Ticket>{new Ticket{type=TicketType.FIRSTCLASS, status=TicketStatusType.BOOKED, AmountPaid = 300.00,  flight=context.flights.First<Flight>()}},
                     givenName="Kurtis", familyName="Oosterhof", phoneNumber="6045551234", address="123 Fake St. Fakeville", birthdate = new DateTime(1990, 06, 29), country="Canada"},
-                new Passenger{tickets=new List<Ticket>{new Ticket{type=TicketType.FIRSTCLASS, status=TicketStatusType.BOOKED, flight=context.flights.First<Flight>()}},
+                new Passenger{tickets=new List<Ticket>{new Ticket{type=TicketType.FIRSTCLASS, status=TicketStatusType.BOOKED, AmountPaid = 300.00,  flight=context.flights.First<Flight>()}},
                     givenName="Ali", familyName="Mograbhi", phoneNumber="6045551234", address="123 Fake St. Fakeville", birthdate = new DateTime(1990, 06, 29), country="Canada"}
             };
 

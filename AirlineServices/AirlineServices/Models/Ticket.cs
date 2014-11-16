@@ -16,12 +16,12 @@ namespace AirlineServices.Models
         public int? FlightId { get; set; }
         [Display(Name = "Flight")]
         [ForeignKey("FlightId")]
-        public Flight flight { get; set; }
+        public virtual Flight flight { get; set; }
 
         [Display(Name = "Passenger")]
         public int? PassengerId { get; set; }
         [ForeignKey("PassengerId")]
-        public Passenger passenger { get; set; }
+        public virtual Passenger passenger { get; set; }
 
         [Required]
         [Display(Name = "Status")]
@@ -56,7 +56,7 @@ namespace AirlineServices.Models
         {
             get
             {
-                return (flight == null) ? 0.0 : flight.ticketPrice - AmountPaid;
+                return (flight == null) ? -1.0 : TicketClassPrice - AmountPaid;
             }
         }
 
@@ -67,10 +67,27 @@ namespace AirlineServices.Models
         {
             get
             {
-                //TODO 
-                return 0.0;
+                var randomValue = (flight == null) ? -1.0 : (flight.ticketPrice * 1);
+                // Return 0 if they are economy and the flight is less than 2 weeks away
+                var departingDate = (flight == null) ? DateTime.Now : flight.departureDate;
+                if (type == TicketType.ECONOMY && (departingDate - DateTime.Now).TotalDays > 14)
+                {
+                    return 0.0;
+                }
+                return AmountPaid;
             }
         }
 
+        [Display(Name = "Price")]
+        [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = true)]
+        public double TicketClassPrice
+        {
+            get
+            {
+                double modifier = ((double)type / 100.00);
+                return (flight == null) ? -1.0 : (flight.ticketPrice * modifier);
+            }
+        }
     }
 }

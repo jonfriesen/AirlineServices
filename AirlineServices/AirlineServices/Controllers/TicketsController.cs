@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using AirlineServices.Data;
 using AirlineServices.Models;
+using AirlineServices.ViewModels;
 
 namespace AirlineServices.Controllers
 {
@@ -129,35 +130,36 @@ namespace AirlineServices.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index");
             }
             Ticket ticket = db.tickets.Find(id);
             if (ticket == null)
             {
                 return RedirectToAction("Index");
             }
-            return View(ticket);
+
+            PayViewModel viewModel = new PayViewModel();
+            viewModel.ticket = ticket;
+            return View(viewModel);
         }
 
         // POST: Tickets/Pay/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Pay([Bind(Include = "id")] Ticket ticket, string amountToPay)
+        public ActionResult Pay([Bind(Include = "AmountToPay,ticket,ticket.flight")]PayViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                ticket.AmountPaid += Double.Parse(amountToPay);
-                if (ticket.AmountPaid >= ticket.flight.ticketPrice)
+                viewModel.ticket.AmountPaid += viewModel.AmountToPay;
+                if (viewModel.ticket.AmountPaid >= viewModel.ticket.flight.ticketPrice)
                 {
-                    ticket.status = TicketStatusType.CONFIRMED;
+                    viewModel.ticket.status = TicketStatusType.CONFIRMED;
                 }
-                db.Entry(ticket).State = EntityState.Modified;
+                db.Entry(viewModel.ticket).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(ticket);
+            return View(viewModel.ticket);
         }
 
         // GET: Tickets/Delete/5
