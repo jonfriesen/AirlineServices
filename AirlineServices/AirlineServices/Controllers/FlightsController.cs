@@ -33,9 +33,9 @@ namespace AirlineServices.Controllers
             }
 
             //var Locations = db.locations.Select(s => s.city).Distinct().ToList();
-            ViewBag.Sources = db.locations.Select(s => s.city).Distinct().ToList();
+            ViewBag.Sources = db.locations.Select(s => s.city).Distinct().ToList(); ;
             ViewBag.Sources.Insert(0, "Source City");
-            ViewBag.Destinations = db.locations.Select(s => s.city).Distinct().ToList();
+            ViewBag.Destinations = db.locations.Select(s => s.city).Distinct().ToList(); ;
             ViewBag.Destinations.Insert(0, "Destination City");
 
 
@@ -60,10 +60,6 @@ namespace AirlineServices.Controllers
         // GET: Flights/Create
         public ActionResult Create()
         {
-            ViewBag.DestinationId = new SelectList(db.locations, "id", "city");
-            ViewBag.SourceId = new SelectList(db.locations, "id", "city");
-            ViewBag.PlaneId = new SelectList(db.planes, "tailNumber", "tailNumber");
-
             return View();
         }
 
@@ -72,27 +68,15 @@ namespace AirlineServices.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,departureDate,ticketPrice,PlaneId,SourceId,DestinationId")] Flight flight)
+        public ActionResult Create([Bind(Include = "id,departureDate,ticketPrice,status")] Flight flight)
         {
             if (ModelState.IsValid)
             {
-                flight.status = FlightStatusType.ONTIME;
                 db.flights.Add(flight);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            foreach (var modelStateValue in ViewData.ModelState.Values)
-            {
-                foreach (var error in modelStateValue.Errors)
-                {
-                    // Do something useful with these properties
-                    var errorMessage = error.ErrorMessage;
-                    var exception = error.Exception;
-                }
-            }
-            ViewBag.DestinationId = new SelectList(db.locations, "id", "city", flight.DestinationId);
-            ViewBag.SourceId = new SelectList(db.locations, "id", "city", flight.SourceId);
-            ViewBag.PlaneId = new SelectList(db.planes, "tailNumber", "tailNumber", flight.PlaneId);
+
             return View(flight);
         }
 

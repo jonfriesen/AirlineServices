@@ -13,19 +13,10 @@ namespace AirlineServices.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
 
-        public int? PlaneId { get; set; }
-        [Display(Name = "Plane")]
-        [ForeignKey("PlaneId")]
         public virtual Plane plane { get; set; }
 
-        public int? SourceId { get; set; }
-        [Display(Name = "Source")]
-        [ForeignKey("SourceId")]
         public virtual Location source { get; set; }
 
-        public int? DestinationId { get; set; }
-        [Display(Name = "Destination")]
-        [ForeignKey("DestinationId")]
         public virtual Location destination { get; set; }
 
         [Required]

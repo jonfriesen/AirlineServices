@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<AirlineServices.Models.Flight>
 
 @{
-    ViewBag.Title = "Flight Schedule";
+    ViewBag.Title = "Index";
 }
 
-<h2>Flight Schedule</h2>
+<h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Schedule a Flight", "Create")
+    @Html.ActionLink("Create New", "Create")
 </p>
 <!-- Filtering Parameters -->
 @using (Html.BeginForm())
