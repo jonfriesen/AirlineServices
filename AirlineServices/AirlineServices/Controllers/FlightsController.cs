@@ -35,7 +35,7 @@ namespace AirlineServices.Controllers
             var Locations = db.locations.Select(s => s.city).Distinct().ToList();
             ViewBag.Sources = db.locations.Select(s => s.city).Distinct().ToList();
             ViewBag.Sources.Insert(0, "Source City");
-            ViewBag.Destinations = db.locations.Select(s => s.city).Distinct().ToList();
+            ViewBag.Destinations = db.locations.Select(s => s.city).Distinct().ToList(); ;
             ViewBag.Destinations.Insert(0, "Destination City");
 
 
@@ -74,7 +74,6 @@ namespace AirlineServices.Controllers
                     Value = s.id.ToString(),
                     Text = s.airportCode + " - " + s.city
                 });
-
             return View();
         }
 
@@ -83,16 +82,14 @@ namespace AirlineServices.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,departureDate,ticketPrice,PlaneId,SourceId,DestinationId")] Flight flight)
+        public ActionResult Create([Bind(Include = "id,departureDate,ticketPrice,status")] Flight flight)
         {
             if (ModelState.IsValid)
             {
-                flight.status = FlightStatusType.ONTIME;
                 db.flights.Add(flight);
                 db.SaveChanges();
                 return RedirectToAction("Index");
-            }
-            
+            }            
             ViewBag.DestinationId = db.locations.Select(s => new SelectListItem
                 {
                     Value = s.id.ToString(),
