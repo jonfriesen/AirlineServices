@@ -6,7 +6,7 @@
 <div class="jumbotron">
     <h1>Airline Services</h1>
     <p class="lead">Whoop whoop marketing speak</p>
-    <p><a href="/Flight" class="btn btn-primary btn-lg">Search Flights &raquo;</a></p>
+    <p><a href="/Flights" class="btn btn-primary btn-lg">Search Flights &raquo;</a></p>
 </div>
 
 <div class="row">
@@ -43,16 +43,16 @@
     <div class="col-md-4">
         <h2>New Passengers</h2>
         <table class="table">
-            <tr>
+            @*<tr>
                 <th>
                     Passenger
                 </th>
-            </tr>
+            </tr>*@
             @foreach (var passenger in Model.newestPassengers)
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => passenger.FullName)
+                       @Html.ActionLink(@Html.DisplayFor(modelItem => passenger.FullName).ToString(), "Details", "Passengers", new { passenger.id }, new { @class = "" })
                     </td>
                 </tr>
             }
@@ -61,16 +61,16 @@
     <div class="col-md-4">
         <h2>Recent Passengers</h2>
         <table class="table">
-            <tr>
+            @*<tr>
                 <th>
                     Passenger
                 </th>
-            </tr>
+            </tr>*@
             @foreach (var passenger in Model.recentlyUpdatedPassengers)
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => passenger.FullName)
+                        @Html.ActionLink(@Html.DisplayFor(modelItem => passenger.FullName).ToString(), "Details", "Passengers", new { passenger.id }, new { @class = "" })
                     </td>
                 </tr>
             }
