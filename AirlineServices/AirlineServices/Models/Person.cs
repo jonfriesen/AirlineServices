@@ -39,7 +39,7 @@ namespace AirlineServices.Models
         [Required]
         [Display(Name = "Birth Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:MM-dd-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime birthdate { get; set; }
 
 
