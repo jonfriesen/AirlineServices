@@ -16,7 +16,7 @@ namespace AirlineServices.Models
         public int tailNumber { get; set; }
 
         [Required]
-        [Display(Name = "Firt Class Capacity")]
+        [Display(Name = "First Class Capacity")]
         public int firstClassCapacity { get; set; }
 
         [Required]
