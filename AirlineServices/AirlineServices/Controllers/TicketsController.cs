@@ -146,20 +146,24 @@ namespace AirlineServices.Controllers
         // POST: Tickets/Pay/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Pay([Bind(Include = "AmountToPay,ticket,ticket.flight")]PayViewModel viewModel)
+        public ActionResult Pay([Bind(Include = "AmountToPay")]PayViewModel viewModel, int? id)
         {
+
             if (ModelState.IsValid)
             {
-                viewModel.ticket.AmountPaid += viewModel.AmountToPay;
-                if (viewModel.ticket.AmountPaid >= viewModel.ticket.flight.ticketPrice)
+                Ticket ticket = db.tickets.Find(id);
+                ticket.AmountPaid += viewModel.AmountToPay;
+                if (ticket.AmountPaid >= ticket.flight.ticketPrice)
                 {
-                    viewModel.ticket.status = TicketStatusType.CONFIRMED;
+                    ticket.status = TicketStatusType.CONFIRMED;
                 }
-                db.Entry(viewModel.ticket).State = EntityState.Modified;
+                db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                viewModel.ticket = ticket;
+                return View(viewModel);
             }
-            return View(viewModel.ticket);
+            return View(viewModel);
         }
 
         // GET: Tickets/Delete/5
@@ -183,6 +187,7 @@ namespace AirlineServices.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Ticket ticket = db.tickets.Find(id);
+            ticket.AmountPaid = 0;
             ticket.status = TicketStatusType.CANCELLED;
             //db.tickets.Remove(ticket);
             db.SaveChanges();
