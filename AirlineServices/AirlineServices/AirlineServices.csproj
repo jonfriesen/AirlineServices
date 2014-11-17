@@ -132,6 +132,14 @@
     <Compile Include="Migrations\201411161739477_InitialCreate.Designer.cs">
       <DependentUpon>201411161739477_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201411170122129_PassengerLastMod_and_Create_dates.cs" />
+    <Compile Include="Migrations\201411170122129_PassengerLastMod_and_Create_dates.Designer.cs">
+      <DependentUpon>201411170122129_PassengerLastMod_and_Create_dates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411170128571_passenger_createdate_field.cs" />
+    <Compile Include="Migrations\201411170128571_passenger_createdate_field.Designer.cs">
+      <DependentUpon>201411170128571_passenger_createdate_field.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Flight.cs" />
     <Compile Include="Models\FlightStatusType.cs" />
@@ -143,6 +151,7 @@
     <Compile Include="Models\TicketStatusType.cs" />
     <Compile Include="Models\TicketType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="ViewModels\PayViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +282,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201411161739477_InitialCreate.resx">
       <DependentUpon>201411161739477_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411170122129_PassengerLastMod_and_Create_dates.resx">
+      <DependentUpon>201411170122129_PassengerLastMod_and_Create_dates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411170128571_passenger_createdate_field.resx">
+      <DependentUpon>201411170128571_passenger_createdate_field.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

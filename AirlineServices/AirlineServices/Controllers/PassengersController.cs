@@ -83,6 +83,7 @@ namespace AirlineServices.Controllers
         {
             if (ModelState.IsValid)
             {
+                passenger.LastModified = DateTime.Now;
                 db.Entry(passenger).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
