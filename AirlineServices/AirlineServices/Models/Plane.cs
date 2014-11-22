@@ -26,5 +26,6 @@ namespace AirlineServices.Models
         [Required]
         [Display(Name = "Economy Capacity")]
         public int economyCapacity { get; set; }
+
     }
 }

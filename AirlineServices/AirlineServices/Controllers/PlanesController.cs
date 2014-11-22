@@ -111,8 +111,16 @@ namespace AirlineServices.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Plane plane = db.planes.Find(id);
-            db.planes.Remove(plane);
-            db.SaveChanges();
+            if (db.flights.Where(s => s.plane.tailNumber == plane.tailNumber).ToList().Count <= 0)
+            {
+                db.planes.Remove(plane);
+                db.SaveChanges();
+            }
+            else
+            {
+                ViewBag.message = "You cannot delete a plane that has been assigned to a flight.";
+                return View(plane);
+            }
             return RedirectToAction("Index");
         }
 
