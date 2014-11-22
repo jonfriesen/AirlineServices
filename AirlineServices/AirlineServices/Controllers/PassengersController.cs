@@ -112,8 +112,21 @@ namespace AirlineServices.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Passenger passenger = db.passengers.Find(id);
-            db.passengers.Remove(passenger);
-            db.SaveChanges();
+            if (passenger.tickets == null || passenger.tickets.Count <= 0 || !passenger.hasActiveTickets())
+            {
+                // clean up cancelled tickest
+                foreach(var ticket in passenger.tickets.ToList())
+                {
+                    db.tickets.Remove(db.tickets.Find(ticket.id));
+                }
+                db.passengers.Remove(passenger);
+                db.SaveChanges();
+            }
+            else
+            {
+                ViewBag.message = "You cannot delete a passenger that has booked or confirmed tickets.";
+                return View(passenger);
+            }
             return RedirectToAction("Index");
         }
 

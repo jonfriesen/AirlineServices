@@ -13,7 +13,7 @@ namespace AirlineServices.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         [ForeignKey("PassengerId")]
-        public ICollection<Ticket> tickets { get; set; }
+        public virtual ICollection<Ticket> tickets { get; set; }
 
         private DateTime createDate = DateTime.Now;
 
@@ -23,5 +23,11 @@ namespace AirlineServices.Models
         private DateTime lastModified = DateTime.Now;
 
         public DateTime LastModified { get { return lastModified; } set { lastModified = DateTime.Now; } }
+
+        public bool hasActiveTickets()
+        {
+            var activeTickets = tickets.Where(s => s.status == TicketStatusType.BOOKED || s.status == TicketStatusType.CONFIRMED).ToList();
+            return (activeTickets.Count > 0);
+        }
     }
 }
