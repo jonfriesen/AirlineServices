@@ -111,8 +111,16 @@ namespace AirlineServices.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Location location = db.locations.Find(id);
-            db.locations.Remove(location);
-            db.SaveChanges();
+            if (db.flights.Where(s => s.source.airportCode == location.airportCode || s.destination.airportCode == location.airportCode).ToList().Count <= 0)
+            {
+                db.locations.Remove(location);
+                db.SaveChanges();
+            } 
+            else
+            {
+                ViewBag.message = "You cannot delete a location that has been assigned to flight.";
+                return View(location);
+            }
             return RedirectToAction("Index");
         }
 
