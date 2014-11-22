@@ -108,7 +108,11 @@ namespace AirlineServices.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(ticket).State = EntityState.Modified;
+                var existingTicket = db.tickets.Find(ticket.id);
+                existingTicket.FlightId = ticket.FlightId;
+                existingTicket.PassengerId = ticket.PassengerId;
+                existingTicket.type = ticket.type;
+                db.Entry(existingTicket).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
